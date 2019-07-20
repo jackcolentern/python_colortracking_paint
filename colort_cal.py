@@ -11,6 +11,8 @@ import time
 import win32api
 import win32con
 import math
+import subprocess
+	
 
 current_cal = 'g'
 
@@ -33,6 +35,13 @@ layout = [
 		
 		
 		]
+		
+res = subprocess.check_output("wmic path Win32_VideoController get VideoModeDescription").decode("utf-8").splitlines()
+res = res[2].split("x")
+resw = int(res[0])
+resh = int(res[1])
+print(resw,resh)
+
 window = sg.Window('Window Title', layout)  
 #window = sg.Window('CAL', callayout)  
 
@@ -190,7 +199,7 @@ while True:
 		# only proceed if the radius meets a minimum size
 		if radiusg > 10:
 			#print(str(x) + "," + str(y))
-			#win32api.SetCursorPos((int(remap(x,0,640,0,1920)),int(remap(y,70,480,0,1080))))
+			win32api.SetCursorPos((int(remap(xg,0,640,0,resw)),int(remap(yg,70,480,0,resh))))
 
 			# draw the circle and centroid on the frame,
 			# then update the list of tracked points

@@ -12,7 +12,12 @@ import win32api
 import win32con
 import math
 import subprocess
-	
+import sys
+
+calmode = 0
+if (len(sys.argv) == 2 and sys.argv[1] == "cal"):
+	print("cal mode")
+	calmode = 1
 
 current_cal = 'g'
 
@@ -199,7 +204,9 @@ while True:
 		# only proceed if the radius meets a minimum size
 		if radiusg > 10:
 			#print(str(x) + "," + str(y))
-			win32api.SetCursorPos((int(remap(xg,0,640,0,resw)),int(remap(yg,70,480,0,resh))))
+			if (calmode == 0) :
+				win32api.SetCursorPos((int(remap(xg,0,640,0,resw)),int(remap(yg,70,480,0,resh))))
+				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
 
 			# draw the circle and centroid on the frame,
 			# then update the list of tracked points
@@ -220,7 +227,9 @@ while True:
 		# only proceed if the radius meets a minimum size
 		if radiusr > 10:
 			#print(str(x) + "," + str(y))
-			#win32api.SetCursorPos((int(remap(x,0,640,0,1920)),int(remap(y,70,480,0,1080))))
+			if (calmode == 0) :
+				win32api.SetCursorPos((int(remap(xr,0,640,0,resw)),int(remap(yr,70,480,0,resh))))
+				win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
 
 			# draw the circle and centroid on the frame,
 			# then update the list of tracked points
